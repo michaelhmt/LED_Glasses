@@ -13,6 +13,10 @@ const int Low = 20;  //used for lowest threshold
 const int High = 300; //used for high threshold
 int LockSwitch;
 
+const int greenLEDpin = 17;
+const int redLEDpin = 18;
+const int blueLEDpin = 19;
+
 
 void setup() {
   
@@ -21,6 +25,10 @@ void setup() {
   lcd1.begin(16, 2);    //set the screen sizes of the LCD's
   lcd2.begin(16, 2);
   Serial.begin(9600);
+
+ pinMode(greenLEDpin,OUTPUT); 
+ pinMode(redLEDpin,OUTPUT);  
+ pinMode(blueLEDpin,OUTPUT); 
 }
 
 void loop() {
@@ -30,37 +38,53 @@ void loop() {
   Serial.println(audioVal);
   Serial.println(digtialAudVal);
 
-  if (audioVal > 400 && audioVal < 484) //checks if audio input is less than lowest threshold but more than a ambient setting
+  if (audioVal > 450 && audioVal < 500) //checks if audio input is less than lowest threshold but more than a ambient setting
   {
     lcd1.print(":( :( :( :( :( :(");
     lcd2.print(":( :( :( :( :( :(");
+   digitalWrite(blueLEDpin, HIGH);
+   digitalWrite(redLEDpin, LOW);
+   digitalWrite(greenLEDpin, LOW);
     delay(2000);    //should keep it on screen for one second 
     lcd1.clear();
     lcd2.clear();
+
+
   }
 
   //rinise and repeat with diffrent check for audio levels
-  if (audioVal > 484 && audioVal < 495)
+  if (audioVal > 500 && audioVal < 505)
   {
     lcd1.print(":) :) :) :) :) :)");
     lcd2.print(":) :) :) :) :) :)");
+    digitalWrite(greenLEDpin, HIGH);
+    digitalWrite(redLEDpin, LOW);
+    digitalWrite(blueLEDpin, LOW);
     delay(2000);
     lcd1.clear();
     lcd2.clear();
+
+
   }
-  if (audioVal > 495)
+  if (audioVal > 505)
   {
     lcd1.print(":D :D :D :D :D :D");
     lcd2.print(":D :D :D :D :D :D");
+   digitalWrite(redLEDpin, HIGH);
+   digitalWrite(blueLEDpin, LOW);
+   digitalWrite(greenLEDpin, LOW);
     delay(2000);
     lcd1.clear();
     lcd2.clear();
+
+
   }
 
   lcd1.print(":/ :/ :/ ");
   lcd2.print(":/ :/ :/ ");
   lcd1.clear();
   lcd2.clear();
+
 
 
 }
